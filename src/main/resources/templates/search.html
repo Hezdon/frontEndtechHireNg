@@ -1,0 +1,125 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <!--created by Chidalu Egeonu on 16th June, 2021-->
+    <head>
+        <title>Github Public Repository</title>
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/site.css}" />
+
+        <style typ="text/css">
+            .navbar-inverse { background: #1b405f; background-color: #1b405f }
+        </style>
+        <script src="../static/jquery.js" th:src="@{/jquery.js}"></script>
+        <script src="../static/myScript.js" th:src="@{/myScript.js}"></script>
+
+    </head>
+    <body>
+
+        <!-- Static navbar -->
+        <nav class="navbar-inverse navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Search Github Public Repository</a>
+                </div>
+
+            </div>
+        </nav>
+
+        <div class="container-fluid" style="left:15%; width:70%; min-width:300px; ">
+            <br /><br/>
+
+            <div class="row" style="border-bottom:solid #EEE thin;">
+<!--                <form method="post"  target="_self">-->
+                <form th:action="@{/repository/search}" method="post"  th:object="${searchParam}">
+                    <div class="form-row" >
+                        <div class="form-group col-md-4">
+                            <label for="search">Github Repository</label>
+                            <input name="search" th:field="*{data}"  class="form-control" id="search" />
+                        </div>
+                        <div class="form-group col-md-4" style="top:20px;">
+                            <input class="btn btn-sm btn-primary" type="submit" value="search" >
+                        </div>
+                    </div>
+
+
+                            <div>
+                                <div>
+                                    <table class="table table-striped table-bordered small">
+
+
+                                        <tbody>
+                                        <tr th:each="notification :*{repoList}">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td width="52px">
+                                                            <img th:src="@{${notification.getOwner().getAvatarUrl()}}" height="50px" width="50px">
+                                                        </td>
+                                                        <td  valign="bottom" style="padding-left:15px;">
+                                                            <a th:href="@{'/repository/details/'+${notification.getOwner().getLogin()}+'/'+${notification.getName()}}">
+                                                                <span th:text="${notification.getFullName()}"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" th:text="${notification.getDescription()}" style="padding:20px; font-size:14px;"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                </form>
+            </div>
+        </div>
+
+
+
+        <script th:src="@{/bootstrap.min.js}"></script>
+        <script type="text/javascript">
+
+            function toggleOverlay() {
+                var elem = document.getElementById('response-codes');
+                if (elem.style.display !== 'none')
+                    elem.style.display = 'none';
+                else
+                    elem.style.display = 'inline-block';
+            
+            }
+
+            function checkFailedSelect() {
+                var value = document.getElementById("responseCode").selectedIndex
+                
+                if(value === 0){
+                    //unhide the other select form
+                    document.getElementById("failed").disabled = false;
+                } else {
+                    document.getElementById("failed").disabled = true;
+                    document.getElementById("failed").selectedIndex = 0
+                }
+            
+            }
+
+            function checkResponseSelect() { 
+                var value = document.getElementById("failed").selectedIndex
+
+                if(value === 0){
+                    // unhide the other select form
+                    document.getElementById("responseCode").disabled = false;
+                } else {
+                    document.getElementById("responseCode").disabled = true;
+                    document.getElementById("responseCode").selectedIndex = 0
+                }
+            }
+        </script>
+
+    </body>
+</html>

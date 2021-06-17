@@ -1,0 +1,120 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <!--created by Chidalu Egeonu on 20th August, 2019-->
+    <head>
+        <title>Repo Details</title>
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/site.css}" />
+
+        <style typ="text/css">
+            .navbar-inverse { background: #1b405f; background-color: #1b405f }
+        </style>
+        <script src="../static/jquery.js" th:src="@{/jquery.js}"></script>
+        <script src="../static/myScript.js" th:src="@{/myScript.js}"></script>
+
+    </head>
+    <body>
+
+        <!-- Static navbar -->
+        <nav class="navbar-inverse navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand active" href="#">Repository Details</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a class="navbar-brand" th:href="@{/repository/search}">Home</a></li>
+
+                        <li>
+                            <a href="#" onclick="toggleOverlay()"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid" style="left:15%; width:60%; min-width:300px;">
+
+            <br /><br/>
+
+            <div class="row">
+                <form  th:object="${searchParam}" >
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+
+                            <h3 th:text="*{name}" style="font-type:bold;"></h3>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <table class="table table-striped table-bordered small">
+                            <thead>
+                            <th>Contributors</th>
+                            <th>Contributions</th>
+                            <th>No. of Commit</th>
+                            </thead>
+                            <tbody>
+                            <tr th:each="notification :*{contributors}">
+                                <td th:text="${notification.getLogin()}"></td>
+                                <td th:text="${notification.getContributions()}"></td>
+                                <td th:text="${notification.getNumberCommit()}"></td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <table class="table table-striped table-bordered small">
+                            <thead>
+                            <th colspan="2">Analysis/Projection base on commit</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    From:<br/>
+                                    <span th:text="*{commitProjectionDetails.getMinDate()}"></span>
+                                </td>
+                                <td>
+                                    To:<br/>
+                                    <span th:text="*{commitProjectionDetails.getMaxDate()}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Number of Days:<br/>
+                                    <span th:text="*{commitProjectionDetails.getDays()}"></span>
+                                </td>
+                                <td>
+                                    Number of Commits:
+                                    <span th:text="*{commitProjectionDetails.getNumCommit()}"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    <script th:src="@{/bootstrap.min.js}"></script>
+     <script type="text/javascript">
+        function toggleOverlay(){
+            var elem = document.getElementById('response-codes');
+            if(elem.style.display !== 'none')
+                elem.style.display = 'none';
+            else
+                elem.style.display = 'inline-block';
+        }
+    </script>
+
+    </body>
+</html>

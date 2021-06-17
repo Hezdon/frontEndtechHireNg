@@ -1,0 +1,20 @@
+.overlay {
+    background: #f2f2f2;
+    color: #222;
+    overflow: auto;
+    border: solid 1px #ccc;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.overlay-float {
+    background: #f2f2f2;
+    color: #222;
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    overflow: auto;
+    border: solid 1px #ccc;
+}
+
+.flat { border-radius: 0; }
