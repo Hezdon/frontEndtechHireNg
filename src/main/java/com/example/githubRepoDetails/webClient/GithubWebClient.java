@@ -40,34 +40,18 @@ public class GithubWebClient {
 
         return searchRepoResponses;
     }
-    
-    
 
-    public CommitProjectionDetails getProjectionByCommit(String owner, String repo) {
+
+    public CommitsContributorsAndProjection getContributorsAndCommitProjection(String owner, String repo) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String url = githubBaseUrl+"/repo/projection/commits/{owner}/{repo}";
+        String url = githubBaseUrl+"/repo/contributors/commits/{owner}/{repo}";
 
         Map<String, String> vars = new HashMap<>();
         vars.put("owner", owner);
         vars.put("repo", repo);
-        CommitProjectionDetails projectionDetails = restTemplate.getForObject(url, CommitProjectionDetails.class, vars);
+        CommitsContributorsAndProjection contributorsList = restTemplate.getForObject(url, CommitsContributorsAndProjection.class, vars);
 
-        return projectionDetails;
-    }
-
-
-
-    public List<Contributor> getContributorsList(String owner, String repo) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        String url = githubBaseUrl+"/repo/committers/commits/{owner}/{repo}";
-
-        Map<String, String> vars = new HashMap<>();
-        vars.put("owner", owner);
-        vars.put("repo", repo);
-        Contributor[] contributorsList = restTemplate.getForObject(url, Contributor[].class, vars);
-
-        return Arrays.asList(contributorsList);
+        return contributorsList;
     }
 }

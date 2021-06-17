@@ -42,10 +42,10 @@ public class search {
     public String repoDetails(Model model, @PathVariable String owner, @PathVariable String repo){
 
         RepoDetails searchParam = new RepoDetails();
-        List<Contributor> contributors = githubWebClient.getContributorsList(owner, repo);
-        CommitProjectionDetails commitProjectionDetails = githubWebClient.getProjectionByCommit(owner, repo);
-        searchParam.setContributors(contributors);
-        searchParam.setCommitProjectionDetails(commitProjectionDetails);
+        CommitsContributorsAndProjection contributors = githubWebClient.getContributorsAndCommitProjection(owner, repo);
+
+        searchParam.setContributors(contributors.getContributors());
+        searchParam.setCommitProjectionDetails(contributors.getCommitProjectionDetails());
 
         searchParam.setName(repo);
 
